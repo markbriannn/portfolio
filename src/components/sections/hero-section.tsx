@@ -18,23 +18,17 @@ export function HeroSection() {
 
   useGSAP(
     () => {
-      if (!rootRef.current) return;
-
-      // If reduced motion or GSAP context isn't ready, make everything visible immediately
-      if (reduceMotion) {
-        gsap.set(".h-fade, .h-visual", { opacity: 1, x: 0, y: 0, scale: 1 });
-        return;
-      }
+      if (!rootRef.current || reduceMotion) return;
 
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.fromTo(
         ".h-fade",
-        { opacity: 0, y: 28 },
-        { opacity: 1, y: 0, duration: 0.85, stagger: 0.08, clearProps: "transform,opacity" },
+        { y: 28 },
+        { y: 0, duration: 0.85, stagger: 0.08, clearProps: "transform" },
       ).fromTo(
         ".h-visual",
-        { opacity: 0, x: 32, scale: 0.96 },
-        { opacity: 1, x: 0, scale: 1, duration: 0.9, clearProps: "transform,opacity" },
+        { x: 32, scale: 0.96 },
+        { x: 0, scale: 1, duration: 0.9, clearProps: "transform" },
         0.2,
       );
     },

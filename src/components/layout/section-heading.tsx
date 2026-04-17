@@ -28,7 +28,7 @@ export function SectionHeading({
   const rootRef = useRef<HTMLDivElement | null>(null);
   const reduceMotion = useReducedMotion();
   const titleWords = useMemo(() => title.split(" "), [title]);
-  const hiddenStyle = reduceMotion ? undefined : { opacity: 0, transform: "translateY(24px)" };
+  const hiddenStyle = reduceMotion ? undefined : { transform: "translateY(24px)" };
 
   useGSAP(
     () => {
@@ -51,43 +51,19 @@ export function SectionHeading({
       timeline
         .fromTo(
           ".section-heading-eyebrow",
-          {
-            opacity: 0,
-            y: 22,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            clearProps: "transform,opacity",
-          },
+          { y: 22 },
+          { y: 0, clearProps: "transform" },
         )
         .fromTo(
           ".section-heading-word",
-          {
-            opacity: 0,
-            y: 32,
-            rotateX: 14,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            rotateX: 0,
-            stagger: 0.05,
-            clearProps: "transform,opacity",
-          },
+          { y: 32, rotateX: 14 },
+          { y: 0, rotateX: 0, stagger: 0.05, clearProps: "transform" },
           0.08,
         )
         .fromTo(
           ".section-heading-description",
-          {
-            opacity: 0,
-            y: 20,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            clearProps: "transform,opacity",
-          },
+          { y: 20 },
+          { y: 0, clearProps: "transform" },
           0.22,
         );
     },
