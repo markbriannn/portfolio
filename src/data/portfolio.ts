@@ -122,14 +122,18 @@ export type PortfolioData = {
     title: string;
     subtitle: string;
     supportingText: string;
+    supportingNote: string;
     ctas: {
       primary: { label: string; href: string };
       secondary: { label: string; href: string };
       tertiary: { label: string; href: string; download: boolean };
     };
-    visualTitle: string;
-    visualCaption: string;
-    visualHighlights: string[];
+    profileCard: {
+      eyebrow: string;
+      title: string;
+      description: string;
+    };
+    bottomPills: string[];
   };
   trustMetrics: TrustMetric[];
   about: {
@@ -235,28 +239,34 @@ export const portfolioData: PortfolioData = {
     { label: "Contact", href: "#contact", navKey: "contact" },
   ],
   hero: {
-    eyebrow: "Recruiter-Ready Portfolio",
+    eyebrow: "Graduating BSIT Developer From The Philippines",
     title: "Mark Brian Lloyd D. Cardoza",
     subtitle:
-      "I build modern web and mobile systems with clean design, secure workflows, and real-world functionality.",
+      "Full Stack Developer",
     supportingText:
-      "BSIT graduate focused on building scalable applications for businesses, organizations, and public service solutions through modern frontend, backend, and mobile development.",
+      "Building modern web and mobile systems with clean UI, secure workflows, and scalable architecture for teams that need dependable software, not just attractive screens.",
+    supportingNote:
+      "I turn operational needs into polished products, from internal government-style workflow systems to responsive platforms with real functionality, practical logic, and recruiter-ready execution.",
     ctas: {
       primary: { label: "Contact Me", href: "#contact" },
       secondary: { label: "View Projects", href: "#projects" },
       tertiary: {
         label: "Download CV",
-        href: "/mark-brian-lloyd-cv.pdf",
+        href: "/Mark_Brian_Cardoza_Resume.docx",
         download: true,
       },
     },
-    visualTitle: "Professional system-builder",
-    visualCaption:
-      "A recruiter-first presentation of product thinking, workflow awareness, and full stack execution.",
-    visualHighlights: [
-      "Web and mobile delivery",
-      "Secure workflow thinking",
-      "Scalable system structure",
+    profileCard: {
+      eyebrow: "Graduating BSIT",
+      title: "Mark Brian Lloyd D. Cardoza",
+      description:
+        "Developer intern experience, system workflow projects, and recruiter-ready presentation.",
+    },
+    bottomPills: [
+      "DENR PENRO Intern",
+      "Workflow Systems",
+      "Web & Mobile",
+      "Available for Junior Roles",
     ],
   },
   trustMetrics: [
@@ -355,7 +365,6 @@ export const portfolioData: PortfolioData = {
       { name: "HTML", category: "Frontend", note: "Semantic structure" },
       { name: "CSS", category: "Frontend", note: "Responsive styling" },
       { name: "JavaScript", category: "Frontend", note: "Interactive behavior" },
-      { name: "TypeScript", category: "Frontend", note: "Type-safe development" },
       { name: "React", category: "Frontend", note: "Component architecture" },
       { name: "Next.js", category: "Frontend", note: "App router and SSR" },
       { name: "Node.js", category: "Backend", note: "Runtime and services" },
@@ -508,105 +517,8 @@ export const portfolioData: PortfolioData = {
       ],
     },
     {
-      slug: "government-document-tracking-system",
-      title: "Government Document Tracking System",
-      category: "Workflow Platform",
-      impactLine:
-        "Secure routing and monitoring system for document movement, approval history, and office-level visibility.",
-      summary:
-        "A workflow-driven platform for routing documents across offices while preserving status tracking, approval context, and monitoring clarity.",
-      description:
-        "This system was designed to make document routing easier to follow by showing where records are, how they move, and what approvals or actions are tied to them.",
-      role: "Full Stack Developer",
-      result:
-        "Delivered a more reliable way to monitor document movement and reduce uncertainty around routing and approval handoffs.",
-      stack: ["React", "Node.js", "Express", "PostgreSQL", "Tailwind CSS"],
-      features: [
-        {
-          title: "Routing visibility",
-          description:
-            "Documents move through a traceable process with location-aware and status-aware visibility.",
-        },
-        {
-          title: "Approval history",
-          description:
-            "The system keeps an understandable record of actions, reviews, and transitions tied to each document.",
-        },
-        {
-          title: "Monitoring interface",
-          description:
-            "Staff can review current document state and follow progress without relying on manual follow-ups.",
-        },
-      ],
-      overview:
-        "The Government Document Tracking System focused on the operational challenge of monitoring documents as they move between offices, roles, and approval stages.",
-      problem:
-        "When document routing lacks visibility, teams lose time following up on status, identifying bottlenecks, and confirming where a document currently sits.",
-      goal:
-        "Build a clearer, more accountable workflow for routing and monitoring documents with visible status and historical context.",
-      process: [
-        "Studied the structure of document movement and the points where visibility matters most.",
-        "Designed interfaces for routing, record lookup, and approval-aware document monitoring.",
-        "Implemented backend handling for status changes, route updates, and searchable records.",
-        "Improved presentation so office users could scan activity faster and with more confidence.",
-      ],
-      challenges: [
-        "Designing routing logic that feels structured without becoming difficult to follow.",
-        "Showing status history clearly enough for monitoring without creating clutter.",
-        "Maintaining trust in the interface when users depend on it for operational updates.",
-      ],
-      solution: [
-        "Created a workflow model that emphasizes routing state, office movement, and visible history.",
-        "Used clear visual hierarchy to separate active status, document details, and action records.",
-        "Designed the interface to support both quick scanning and deeper tracking when needed.",
-      ],
-      outcome: [
-        "Made it easier to follow document progress across offices and workflow stages.",
-        "Provided better visibility into approvals, routing history, and current document state.",
-        "Delivered a more practical monitoring experience for internal users handling records.",
-      ],
-      media: [
-        {
-          title: "Routing monitor",
-          caption: "Overview screen showing active document routes, pending actions, and workflow state.",
-          stat: "Office tracking",
-        },
-        {
-          title: "Document profile",
-          caption: "Detail page with document metadata, approval history, and movement visibility.",
-          stat: "Audit-ready",
-        },
-        {
-          title: "Approval view",
-          caption: "Focused interface for decision points, status changes, and workflow continuity.",
-          stat: "Clear handoffs",
-        },
-      ],
-      accent: {
-        from: "#8b5cf6",
-        to: "#06b6d4",
-      },
-      links: [
-        {
-          label: "View Case Study",
-          href: "/projects/government-document-tracking-system",
-          kind: "case-study",
-        },
-        {
-          label: "GitHub",
-          href: "https://github.com/your-username/government-document-tracking-system",
-          kind: "github",
-        },
-        {
-          label: "Live Demo",
-          href: "https://your-demo-link.example.com/document-tracking",
-          kind: "demo",
-        },
-      ],
-    },
-    {
       slug: "travel-orders-system",
-      title: "Travel Orders System",
+      title: "Digital Travel Order System",
       category: "Approval Workflow",
       impactLine:
         "Structured travel request and approval workflow for internal coordination, routing, and record visibility.",
@@ -930,8 +842,8 @@ export const portfolioData: PortfolioData = {
       },
       {
         label: "LinkedIn",
-        href: "https://linkedin.com/in/your-profile",
-        display: "linkedin.com/in/your-profile",
+        href: "https://www.linkedin.com/in/markbriannn/",
+        display: "linkedin.com/in/markbriannn",
         icon: "linkedin",
       },
       {

@@ -93,7 +93,7 @@ export function ContactSection() {
               <p className="mt-4 text-lg leading-8 text-background/90 dark:text-slate-700">
                 {portfolioData.contactSection.closingLine}
               </p>
-              <CtaLink href="/mark-brian-lloyd-cv.pdf" download className="mt-6 bg-background text-foreground dark:bg-slate-950 dark:text-white">
+              <CtaLink href="/documents/Mark_Brian_Cardoza_Resume_v4.docx" download className="mt-6 bg-background text-foreground dark:bg-slate-950 dark:text-white">
                 Download CV
               </CtaLink>
             </div>

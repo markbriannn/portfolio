@@ -1,130 +1,76 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { GraduationCap, ScanFace } from "lucide-react";
-import { useState } from "react";
 
 import { portfolioData } from "@/data/portfolio";
 
 export function HeroPortraitCard() {
-  const [imageFailed, setImageFailed] = useState(false);
-  const photo = portfolioData.profile.photo;
+  const reduceMotion = useReducedMotion();
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.96 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-      className="glass-panel relative overflow-hidden p-4 sm:p-6"
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.12),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(45,212,191,0.14),transparent_35%)]" />
-      <div className="relative">
-        <div className="rounded-[2rem] border border-border/60 bg-slate-950 p-4 text-white shadow-premium sm:p-5">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <span className="text-xs uppercase tracking-[0.24em] text-slate-300/60">
-              Profile Presentation
-            </span>
-            <span className="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-slate-200/80">
-              {photo.badge}
-            </span>
+    <div className="relative overflow-hidden rounded-[2.55rem] border border-border/60 bg-surface/82 p-5 shadow-premium sm:p-6 lg:min-h-[34rem] lg:p-7">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_16%,rgba(255,255,255,0.58),transparent_26%),radial-gradient(circle_at_80%_18%,rgba(56,189,248,0.10),transparent_24%),radial-gradient(circle_at_74%_78%,rgba(56,189,248,0.08),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.14),rgba(255,255,255,0.04))] dark:bg-[radial-gradient(circle_at_20%_16%,rgba(255,255,255,0.06),transparent_26%),radial-gradient(circle_at_80%_18%,rgba(56,189,248,0.10),transparent_24%),radial-gradient(circle_at_74%_78%,rgba(56,189,248,0.08),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))]" />
+      <div className="absolute inset-0 opacity-45 [background-image:linear-gradient(to_right,rgba(148,163,184,0.14)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.14)_1px,transparent_1px)] [background-size:36px_36px]" />
+      <div className="absolute left-[12%] top-[12%] h-60 w-60 rounded-full border border-sky-200/35 opacity-55 dark:border-white/10 dark:opacity-35" />
+      <div className="absolute right-[10%] top-[14%] h-24 w-24 rounded-[1.8rem] border border-primary/25 bg-surface/42 backdrop-blur-xl" />
+      <div className="absolute bottom-[12%] left-[10%] h-28 w-28 rounded-full bg-sky-300/10 blur-3xl dark:bg-sky-400/10" />
+      <div className="absolute bottom-[10%] right-[12%] h-20 w-20 rounded-full border border-border/50 bg-surface/40 backdrop-blur-xl" />
+
+      <div className="relative flex h-full min-h-[26rem] items-center justify-center">
+        <motion.div
+          animate={
+            reduceMotion
+              ? undefined
+              : {
+                  y: [0, -8, 0],
+                }
+          }
+          transition={
+            reduceMotion
+              ? undefined
+              : {
+                  duration: 6.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeInOut",
+                }
+          }
+          whileHover={
+            reduceMotion
+              ? undefined
+              : {
+                  y: -10,
+                  scale: 1.02,
+                  boxShadow: "0 34px 90px -46px rgba(15,23,42,0.34)",
+                  transition: {
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 22,
+                  },
+                }
+          }
+          className="relative w-full max-w-[20rem] overflow-hidden rounded-[2.2rem] border border-border/60 bg-surface/92 p-3 shadow-[0_28px_80px_-46px_rgba(15,23,42,0.30)] sm:max-w-[22rem] lg:max-w-[23rem]"
+        >
+          <div className="absolute inset-x-3 top-3 z-10 flex items-center justify-between rounded-full border border-border/55 bg-surface/75 px-4 py-2 backdrop-blur-xl">
+            <span className="h-2.5 w-2.5 rounded-full bg-primary/80" />
+            <span className="h-2.5 w-2.5 rounded-full bg-foreground/20" />
           </div>
 
-          <div className="mt-4 grid gap-4 lg:grid-cols-[1.04fr_0.78fr] lg:items-stretch">
-            <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04]">
-              <div className="relative mx-auto aspect-[4/5] min-h-[24rem] max-w-[22rem] sm:min-h-[30rem] sm:max-w-[24rem] lg:h-full lg:min-h-[31rem] lg:max-w-none lg:aspect-auto">
-                {!imageFailed ? (
-                  <>
-                    <Image
-                      src={photo.src}
-                      alt={photo.alt}
-                      fill
-                      priority
-                      sizes="(min-width: 1024px) 28rem, 100vw"
-                      className="object-cover"
-                      style={{ objectPosition: photo.objectPosition }}
-                      onError={() => setImageFailed(true)}
-                    />
-                    <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(2,6,23,0.65),rgba(2,6,23,0.05)_50%,rgba(2,6,23,0.25))]" />
-                  </>
-                ) : (
-                  <div className="flex h-full w-full flex-col justify-between bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.2),transparent_35%),linear-gradient(180deg,rgba(2,6,23,0.98),rgba(15,23,42,0.98))] p-5">
-                    <div className="flex items-center justify-between">
-                      <span className="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-slate-300/75">
-                        Portrait fallback
-                      </span>
-                      <ScanFace className="h-4 w-4 text-slate-300/65" />
-                    </div>
-                    <div>
-                      <div className="flex h-24 w-24 items-center justify-center rounded-[2rem] border border-white/10 bg-white/5 text-2xl font-semibold tracking-[0.16em] text-white shadow-glow">
-                        {portfolioData.profile.initials}
-                      </div>
-                      <p className="mt-5 text-sm leading-6 text-slate-300/80">{photo.caption}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="absolute inset-x-0 bottom-0 p-3">
-                <div className="max-w-[16rem] rounded-[1.25rem] border border-white/10 bg-slate-950/60 p-3 backdrop-blur-xl">
-                  <p className="text-[11px] uppercase tracking-[0.22em] text-slate-300/60">
-                    {portfolioData.profile.title}
-                  </p>
-                  <p className="mt-2 text-sm font-medium leading-6 text-white sm:text-base">
-                    {portfolioData.profile.name}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-              <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.04] px-4 py-3 sm:col-span-2 lg:col-span-1">
-                <p className="text-xs uppercase tracking-[0.22em] text-slate-300/60">
-                  Visual note
-                </p>
-                <p className="mt-2 text-sm leading-6 text-slate-200/85">
-                  {portfolioData.hero.visualCaption}
-                </p>
-              </div>
-
-              <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.04] px-4 py-3">
-                <div className="flex items-start gap-3">
-                  <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04]">
-                    <GraduationCap className="h-4 w-4 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-[11px] uppercase tracking-[0.22em] text-slate-300/60">
-                      Education
-                    </p>
-                    <p className="mt-2 text-sm font-medium leading-5 text-white">
-                      Saint Joseph College - Maasin City, Southern Leyte
-                    </p>
-                    <p className="mt-1 text-sm leading-5 text-slate-300/80">
-                      Bachelor of Science in Information Technology
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-2 rounded-[1.25rem] border border-white/10 bg-white/[0.04] px-4 py-3">
-                <p className="text-xs uppercase tracking-[0.22em] text-slate-300/60">
-                  {portfolioData.hero.visualTitle}
-                </p>
-                <div className="mt-3 grid gap-2">
-                  {portfolioData.hero.visualHighlights.map((item) => (
-                    <div
-                      key={item}
-                      className="rounded-[1rem] border border-white/10 bg-white/[0.04] px-3 py-2 text-sm leading-5 text-slate-100"
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[1.7rem] bg-surface-strong">
+            <Image
+              src={portfolioData.profile.photo.src}
+              alt={portfolioData.profile.photo.alt}
+              fill
+              unoptimized
+              sizes="(max-width: 1024px) 320px, 368px"
+              className="object-cover"
+              style={{ objectPosition: portfolioData.profile.photo.objectPosition }}
+              priority
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(15,23,42,0.22),transparent_38%,transparent)]" />
           </div>
-        </div>
+        </motion.div>
       </div>
-    </motion.div>
+    </div>
   );
 }

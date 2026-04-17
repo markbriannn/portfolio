@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { useLenis } from "lenis/react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,6 +15,7 @@ import { ThemeToggle } from "./theme-toggle";
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const lenis = useLenis();
   const isHome = pathname === "/";
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
@@ -79,6 +81,39 @@ export function SiteHeader() {
     };
   }, [isHome]);
 
+  const scrollToSection = (href: string, navKey?: string) => {
+    if (!isHome || !href.startsWith("#")) {
+      return undefined;
+    }
+
+    return (event: React.MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+
+      const target = document.querySelector<HTMLElement>(href);
+
+      if (!target) {
+        return;
+      }
+
+      const headerOffset = 112;
+      const targetY = Math.max(0, window.scrollY + target.getBoundingClientRect().top - headerOffset);
+      const distance = Math.abs(window.scrollY - targetY);
+      const duration = Math.min(1.05, Math.max(0.65, distance / 2000));
+
+      lenis?.scrollTo(targetY, {
+        duration,
+        lerp: 0.12,
+        immediate: false,
+      });
+
+      if (navKey) {
+        setActive(navKey);
+      }
+
+      setOpen(false);
+    };
+  };
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-5 pt-4 sm:px-6 lg:px-8">
       <div
@@ -92,11 +127,8 @@ export function SiteHeader() {
         <Link
           href={isHome ? "#home" : "/#home"}
           className="flex items-center gap-3 rounded-full"
-          onClick={() => setOpen(false)}
+          onClick={scrollToSection("#home", "home") ?? (() => setOpen(false))}
         >
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border/60 bg-surface/80 text-sm font-semibold tracking-[0.18em] text-foreground shadow-glow">
-            {portfolioData.profile.initials}
-          </div>
           <div className="hidden sm:block">
             <p className="text-sm font-semibold text-foreground">{portfolioData.profile.name}</p>
             <p className="text-xs uppercase tracking-[0.2em] text-muted">
@@ -110,6 +142,7 @@ export function SiteHeader() {
             <Link
               key={item.label}
               href={item.href}
+              onClick={scrollToSection(item.href, item.navKey)}
               className={cn(
                 "rounded-full px-4 py-2 text-sm transition duration-300",
                 active === item.navKey && isHome
@@ -124,7 +157,11 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-3">
           <ThemeToggle className="hidden sm:inline-flex" />
-          <CtaLink href={isHome ? "#contact" : "/#contact"} className="hidden lg:inline-flex">
+          <CtaLink
+            href={isHome ? "#contact" : "/#contact"}
+            onClick={scrollToSection("#contact", "contact")}
+            className="hidden lg:inline-flex"
+          >
             Contact Me
           </CtaLink>
           <button
@@ -152,8 +189,8 @@ export function SiteHeader() {
                 <Link
                   key={item.label}
                   href={item.href}
+                  onClick={scrollToSection(item.href, item.navKey)}
                   className="rounded-2xl px-4 py-3 text-sm font-medium text-foreground/85 transition hover:bg-surface-strong/90"
-                  onClick={() => setOpen(false)}
                 >
                   {item.label}
                 </Link>
@@ -161,7 +198,11 @@ export function SiteHeader() {
             </nav>
             <div className="mt-4 flex items-center gap-3">
               <ThemeToggle />
-              <CtaLink href={isHome ? "#contact" : "/#contact"} className="flex-1">
+              <CtaLink
+                href={isHome ? "#contact" : "/#contact"}
+                onClick={scrollToSection("#contact", "contact")}
+                className="flex-1"
+              >
                 Contact Me
               </CtaLink>
             </div>

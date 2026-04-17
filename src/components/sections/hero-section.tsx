@@ -1,307 +1,188 @@
 "use client";
 
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, ChevronDown, Download } from "lucide-react";
-import { useLayoutEffect, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { ArrowUpRight, Download, MapPin, Briefcase, CheckCircle2 } from "lucide-react";
+import Image from "next/image";
+import { useReducedMotion } from "framer-motion";
+import { useRef } from "react";
 
 import { portfolioData } from "@/data/portfolio";
-
 import { CtaLink } from "../layout/cta-link";
-import { HeroPortraitCard } from "./hero-portrait-card";
+
+gsap.registerPlugin(useGSAP);
 
 export function HeroSection() {
-  const rootRef = useRef<HTMLElement | null>(null);
   const reduceMotion = useReducedMotion();
+  const rootRef = useRef<HTMLElement | null>(null);
 
-  useLayoutEffect(() => {
-    if (reduceMotion || !rootRef.current) {
-      return;
-    }
+  useGSAP(
+    () => {
+      if (reduceMotion || !rootRef.current) return;
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.fromTo(
+        ".h-fade",
+        { opacity: 0, y: 28 },
+        { opacity: 1, y: 0, duration: 0.85, stagger: 0.08, clearProps: "transform,opacity" },
+      ).fromTo(
+        ".h-visual",
+        { opacity: 0, x: 32, scale: 0.96 },
+        { opacity: 1, x: 0, scale: 1, duration: 0.9, clearProps: "transform,opacity" },
+        0.2,
+      );
+    },
+    { scope: rootRef, dependencies: [reduceMotion], revertOnUpdate: true },
+  );
 
-    gsap.registerPlugin(ScrollTrigger);
-
-    const context = gsap.context(() => {
-      gsap.to(".hero-decor-one", {
-        yPercent: -22,
-        ease: "none",
-        scrollTrigger: {
-          trigger: rootRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.6,
-        },
-      });
-
-      gsap.to(".hero-decor-two", {
-        yPercent: -30,
-        ease: "none",
-        scrollTrigger: {
-          trigger: rootRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.6,
-        },
-      });
-
-      gsap.to(".hero-decor-three", {
-        yPercent: -18,
-        xPercent: -10,
-        ease: "none",
-        scrollTrigger: {
-          trigger: rootRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.6,
-        },
-      });
-
-      gsap.to(".hero-copy", {
-        yPercent: -8,
-        ease: "none",
-        scrollTrigger: {
-          trigger: rootRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.75,
-        },
-      });
-
-      gsap.to(".hero-visual-shell", {
-        yPercent: -14,
-        ease: "none",
-        scrollTrigger: {
-          trigger: rootRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.75,
-        },
-      });
-
-      gsap.to(".hero-scroll-cue", {
-        yPercent: -22,
-        ease: "none",
-        scrollTrigger: {
-          trigger: rootRef.current,
-          start: "top 15%",
-          end: "bottom top",
-          scrub: 0.75,
-        },
-      });
-
-      gsap.to(".hero-trust-strip", {
-        yPercent: -14,
-        ease: "none",
-        scrollTrigger: {
-          trigger: rootRef.current,
-          start: "top 20%",
-          end: "bottom top",
-          scrub: 0.75,
-        },
-      });
-
-      ScrollTrigger.refresh();
-    }, rootRef);
-
-    return () => context?.revert();
-  }, [reduceMotion]);
+  const strengths = [
+    "Full stack: React, Next.js, Node.js, PostgreSQL",
+    "Real workflow systems — not just demo projects",
+    "DENR PENRO internship · Capstone-defended",
+  ];
 
   return (
     <section
       id="home"
       data-nav="home"
       ref={rootRef}
-      className="relative overflow-hidden pb-14 pt-24 sm:pt-28"
+      className="relative overflow-hidden pb-16 pt-24 sm:pt-28"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-[2.25rem] border border-border/60 bg-hero-radial shadow-premium">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.05),transparent_44%),linear-gradient(135deg,rgba(255,255,255,0.035),transparent_42%)] dark:bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.06),transparent_44%),linear-gradient(135deg,rgba(255,255,255,0.035),transparent_42%)]" />
-          <div className="absolute inset-y-0 right-0 hidden w-1/2 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.18),transparent_45%)] lg:block" />
-          <div className="hero-decor-three absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_18%_0%,rgba(255,255,255,0.12),transparent_52%),radial-gradient(circle_at_76%_12%,rgba(56,189,248,0.12),transparent_40%),linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0))] opacity-80" />
-          <div className="relative grid min-h-[calc(100svh-8rem)] gap-10 px-6 py-8 sm:px-8 md:px-10 lg:grid-cols-[1.02fr_0.98fr] lg:px-12 lg:py-10">
-            <div className="hero-copy flex min-h-full flex-col">
-              <div className="flex flex-1 flex-col justify-center">
-                <motion.span
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                  className="inline-flex w-fit rounded-full border border-border/60 bg-surface/75 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-muted backdrop-blur-xl"
-                >
-                  {portfolioData.hero.eyebrow}
-                </motion.span>
-                <motion.h1
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.72, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-6 max-w-3xl text-5xl font-semibold tracking-[-0.06em] text-foreground sm:text-6xl lg:text-7xl"
-                >
-                  {portfolioData.hero.title}
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.72, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-5 max-w-3xl text-2xl font-medium leading-[1.25] text-foreground/88 sm:text-3xl"
-                >
-                  {portfolioData.profile.title}
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.72, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-5 max-w-3xl text-lg leading-8 text-foreground/85 sm:text-xl"
-                >
+        <div className="relative overflow-hidden rounded-[2.4rem] border border-border/60 bg-hero-radial shadow-premium">
+
+          {/* bg decoration */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_65%_0%,rgba(56,189,248,0.15),transparent_65%)] dark:bg-[radial-gradient(ellipse_70%_55%_at_65%_0%,rgba(56,189,248,0.08),transparent_65%)]" />
+          <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(to_right,rgba(148,163,184,0.15)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.15)_1px,transparent_1px)] [background-size:44px_44px]" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(to_top,rgba(255,255,255,0.16),transparent)] opacity-60 dark:opacity-0" />
+          <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_80%_30%,rgba(56,189,248,0.10),transparent_55%)]" />
+
+          {/* grid */}
+          <div className="relative grid min-h-[calc(100svh-8rem)] items-center gap-10 px-6 py-12 sm:px-8 md:px-10 lg:grid-cols-[1fr_auto] lg:gap-16 lg:px-14 lg:py-16 xl:px-16">
+
+            {/* LEFT */}
+            <div className="flex flex-col">
+
+              <div className="h-fade inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 bg-primary/[0.08] px-3.5 py-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+                </span>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
+                  Available for hire
+                </span>
+              </div>
+
+              <h1 className="h-fade mt-6 text-[clamp(2.6rem,6.5vw,5.2rem)] font-semibold leading-[0.9] tracking-[-0.055em] text-foreground">
+                {portfolioData.hero.title}
+              </h1>
+
+              <div className="h-fade mt-4 flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-surface/80 px-3.5 py-1.5 text-sm font-semibold text-foreground/80 backdrop-blur-xl">
+                  <Briefcase className="h-3.5 w-3.5 text-primary" />
                   {portfolioData.hero.subtitle}
-                </motion.p>
-                <motion.p
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.72, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-5 max-w-2xl text-base leading-7 text-muted sm:text-lg"
-                >
-                  {portfolioData.hero.supportingText}
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.72, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-8 flex flex-wrap gap-3"
-                >
-                  <CtaLink href={portfolioData.hero.ctas.primary.href} className="gap-2">
-                    {portfolioData.hero.ctas.primary.label}
-                    <ArrowUpRight className="h-4 w-4" />
-                  </CtaLink>
-                  <CtaLink href={portfolioData.hero.ctas.secondary.href} variant="secondary">
-                    {portfolioData.hero.ctas.secondary.label}
-                  </CtaLink>
-                  <CtaLink
-                    href={portfolioData.hero.ctas.tertiary.href}
-                    variant="secondary"
-                    download={portfolioData.hero.ctas.tertiary.download}
-                    className="gap-2"
-                  >
-                    <Download className="h-4 w-4" />
-                    {portfolioData.hero.ctas.tertiary.label}
-                  </CtaLink>
-                </motion.div>
-              </div>
-            </div>
-
-            <div className="relative flex items-center justify-center lg:justify-end">
-              <div className="hero-visual-shell relative w-full max-w-[34rem]">
-                <div className="hero-decor-one absolute -left-6 top-10 h-32 w-32 rounded-full bg-cyan-300/15 blur-3xl dark:bg-cyan-400/20" />
-                <div className="hero-decor-two absolute -right-6 bottom-10 h-40 w-40 rounded-full bg-emerald-300/10 blur-3xl dark:bg-emerald-400/15" />
-                <HeroPortraitCard />
-              </div>
-            </div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.72, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="hero-scroll-cue relative px-6 pb-8 sm:px-8 md:px-10 lg:px-12 lg:pb-10"
-          >
-            <motion.a
-              href="#projects"
-              whileHover={reduceMotion ? undefined : { x: 4 }}
-              transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              className="group inline-flex items-center gap-4 text-sm text-muted"
-              aria-label="Scroll to featured projects"
-            >
-              <span className="relative flex h-[4.5rem] w-10 shrink-0 items-start justify-center">
-                <span className="absolute left-1/2 top-0 flex h-[3.35rem] w-[1.85rem] -translate-x-1/2 justify-center rounded-full border-2 border-foreground/25 bg-surface/55 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl">
-                  <motion.span
-                    animate={
-                      reduceMotion
-                        ? undefined
-                        : {
-                            y: [6, 18, 6],
-                            opacity: [1, 0.3, 1],
-                          }
-                    }
-                    transition={
-                      reduceMotion
-                        ? undefined
-                        : {
-                            duration: 1.8,
-                            repeat: Number.POSITIVE_INFINITY,
-                            ease: "easeInOut",
-                          }
-                    }
-                    className="mt-2.5 h-3 w-1.5 rounded-full bg-foreground/70"
-                  />
                 </span>
-                <span className="absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center">
-                  {[0, 1].map((index) => (
-                    <motion.span
-                      key={index}
-                      animate={
-                        reduceMotion
-                          ? undefined
-                          : {
-                              y: [0, 5, 0],
-                              opacity: [0.18, 1, 0.18],
-                            }
-                      }
-                      transition={
-                        reduceMotion
-                          ? undefined
-                          : {
-                              duration: 1.5,
-                              repeat: Number.POSITIVE_INFINITY,
-                              ease: "easeInOut",
-                              delay: index * 0.18,
-                            }
-                      }
-                      className={index === 0 ? "" : "-mt-1.5"}
-                    >
-                      <ChevronDown className="h-4 w-4 text-foreground/45 transition-colors duration-300 group-hover:text-primary" />
-                    </motion.span>
-                  ))}
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-surface/80 px-3.5 py-1.5 text-sm font-medium text-foreground/65 backdrop-blur-xl">
+                  <MapPin className="h-3.5 w-3.5 text-muted" />
+                  {portfolioData.profile.location}
                 </span>
-              </span>
-              <motion.span
-                animate={reduceMotion ? undefined : { opacity: [0.7, 1, 0.7] }}
-                transition={
-                  reduceMotion
-                    ? undefined
-                    : {
-                        duration: 2.2,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "easeInOut",
-                      }
-                }
-              >
-                Scroll to explore projects, proof, and hiring details.
-              </motion.span>
-            </motion.a>
-          </motion.div>
-        </div>
+              </div>
 
-        <div className="hero-trust-strip mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {portfolioData.trustMetrics.map((metric, index) => (
-            <motion.div
-              key={metric.value}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{
-                duration: 0.65,
-                delay: index * 0.08,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="glass-panel p-5"
-            >
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
-                {metric.value}
+              <p className="h-fade mt-6 max-w-[34rem] text-[1.05rem] leading-[1.75] text-foreground/70">
+                {portfolioData.hero.supportingText}
               </p>
-              <p className="mt-3 text-lg font-semibold text-foreground">{metric.label}</p>
-              <p className="mt-2 text-sm leading-6 text-muted">{metric.detail}</p>
-            </motion.div>
-          ))}
+
+              <ul className="h-fade mt-5 flex flex-col gap-2">
+                {strengths.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-foreground/65">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="h-fade mt-8 flex flex-wrap gap-3">
+                <CtaLink href={portfolioData.hero.ctas.primary.href} className="gap-2">
+                  {portfolioData.hero.ctas.primary.label}
+                  <ArrowUpRight className="h-4 w-4" />
+                </CtaLink>
+                <CtaLink href={portfolioData.hero.ctas.secondary.href} variant="secondary">
+                  {portfolioData.hero.ctas.secondary.label}
+                </CtaLink>
+                <CtaLink
+                  href={portfolioData.hero.ctas.tertiary.href}
+                  variant="secondary"
+                  download={portfolioData.hero.ctas.tertiary.download}
+                  className="gap-2"
+                >
+                  <Download className="h-4 w-4" />
+                  {portfolioData.hero.ctas.tertiary.label}
+                </CtaLink>
+              </div>
+
+              <div className="h-fade mt-8 flex flex-wrap gap-2">
+                {portfolioData.hero.bottomPills.map((pill) => (
+                  <span
+                    key={pill}
+                    className="rounded-full border border-border/55 bg-surface/75 px-3.5 py-1.5 text-xs font-medium text-foreground/65 backdrop-blur-xl"
+                  >
+                    {pill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* RIGHT */}
+            <div className="h-visual flex justify-center lg:justify-end">
+              <div className="relative w-[17rem] shrink-0 sm:w-[19rem] lg:w-[21rem]">
+
+                <div className="absolute -inset-6 rounded-[3rem] bg-[radial-gradient(circle,rgba(56,189,248,0.18),transparent_70%)] blur-2xl" />
+
+                <div className="relative overflow-hidden rounded-[2.2rem] border border-border/60 bg-surface/90 p-4 shadow-premium backdrop-blur-xl">
+
+                  <div className="mb-3 flex items-center justify-between rounded-full border border-border/50 bg-surface/70 px-4 py-2 backdrop-blur-xl">
+                    <span className="h-2.5 w-2.5 rounded-full bg-primary/80 shadow-[0_0_6px_rgba(56,189,248,0.6)]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-foreground/15" />
+                  </div>
+
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-[1.6rem] bg-surface-strong">
+                    <Image
+                      src={portfolioData.profile.photo.src}
+                      alt={portfolioData.profile.photo.alt}
+                      fill
+                      sizes="(max-width: 1024px) 304px, 336px"
+                      className="object-cover"
+                      style={{ objectPosition: portfolioData.profile.photo.objectPosition }}
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(15,23,42,0.18),transparent_40%)]" />
+                  </div>
+
+                  <div className="mt-3 rounded-[1.2rem] border border-border/50 bg-surface/80 px-4 py-3 backdrop-blur-xl">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">
+                      {portfolioData.hero.profileCard.eyebrow}
+                    </p>
+                    <p className="mt-0.5 text-sm font-semibold text-foreground">
+                      {portfolioData.profile.name}
+                    </p>
+                    <p className="mt-0.5 text-xs text-muted">
+                      {portfolioData.hero.profileCard.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="absolute -left-6 top-[22%] rounded-2xl border border-border/60 bg-surface/92 px-3.5 py-2.5 shadow-premium backdrop-blur-xl">
+                  <p className="text-[11px] font-bold text-foreground">3 Systems</p>
+                  <p className="text-[10px] text-muted">Built &amp; deployed</p>
+                </div>
+                <div className="absolute -right-6 bottom-[28%] rounded-2xl border border-border/60 bg-surface/92 px-3.5 py-2.5 shadow-premium backdrop-blur-xl">
+                  <p className="text-[11px] font-bold text-foreground">Web + Mobile</p>
+                  <p className="text-[10px] text-muted">Full stack</p>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </section>

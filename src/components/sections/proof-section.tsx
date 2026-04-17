@@ -28,7 +28,7 @@ export function ProofSection() {
               Contact Mark
               <ArrowUpRight className="h-4 w-4" />
             </CtaLink>
-            <CtaLink href="/mark-brian-lloyd-cv.pdf" variant="secondary" download className="gap-2">
+            <CtaLink href="/documents/Mark_Brian_Cardoza_Resume_v4.docx" variant="secondary" download className="gap-2">
               <Download className="h-4 w-4" />
               Download CV
             </CtaLink>

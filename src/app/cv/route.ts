@@ -121,10 +121,7 @@ export async function GET() {
       ...wrapText(project.result, 84).map((line) => `  ${line}`),
     ]),
   );
-  drawSection(
-    "Core Stack",
-    [portfolioData.techStack.items.map((item) => item.name).join(" | ")],
-  );
+  drawSection("Core Stack", [portfolioData.techStack.items.map((item) => item.name).join(" | ")]);
   drawSection("Availability", wrapText(portfolioData.profile.availability, 90));
   drawSection(
     "Contact",

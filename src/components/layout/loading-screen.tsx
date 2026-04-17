@@ -33,18 +33,13 @@ export function LoadingScreen() {
           className="pointer-events-none fixed inset-0 z-[70] flex items-center justify-center bg-[#09111d] text-white"
         >
           <div className="flex flex-col items-center gap-5">
-            <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/15 bg-white/5 text-lg font-semibold tracking-[0.18em] text-white/90 shadow-glow">
-                {portfolioData.profile.initials}
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-[0.28em] text-white/45">
-                  Loading Portfolio
-                </p>
-                <p className="mt-2 text-lg font-medium tracking-[-0.03em]">
-                  {portfolioData.profile.name}
-                </p>
-              </div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] text-white/45">
+                Loading Portfolio
+              </p>
+              <p className="mt-2 text-lg font-medium tracking-[-0.03em]">
+                {portfolioData.profile.name}
+              </p>
             </div>
             <div className="h-px w-56 overflow-hidden rounded-full bg-white/10">
               <motion.div
