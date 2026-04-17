@@ -19,10 +19,11 @@ export function Reveal({
 }: RevealProps) {
   const reduceMotion = useReducedMotion();
   const rootRef = useRef<HTMLDivElement | null>(null);
-  const [isVisible, setIsVisible] = useState(reduceMotion);
+  const [isVisible, setIsVisible] = useState(() => reduceMotion ?? false);
 
   useEffect(() => {
-    if (reduceMotion || !rootRef.current) {
+    // reduceMotion can be null on first render — treat null as "show immediately" to be safe
+    if (reduceMotion === null || reduceMotion === true || !rootRef.current) {
       setIsVisible(true);
       return;
     }
@@ -52,7 +53,7 @@ export function Reveal({
       ref={rootRef}
       className={className}
       style={
-        reduceMotion
+        reduceMotion === true
           ? undefined
           : {
               opacity: isVisible ? 1 : 0,
